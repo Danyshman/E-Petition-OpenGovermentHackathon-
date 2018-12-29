@@ -1,0 +1,20 @@
+.star-rating {
+    line-height:32px;
+    font-size:1.25em;
+    cursor: pointer;
+    color: #6f42c1;
+    display: inline-block;
+    margin-right: 10px
+}
+
+.star-rating :active,
+.star-rating :hover{
+    color: orange;
+}
+
+@media (max-width: 800px){
+    .star-rating {
+        line-height:20px;
+        font-size:1rem;
+    }
+}

@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{#{% block title %} | Welcome {% endblock %}#}
+{% block content %}
+  <!-- Showcase -->
+  <section id='showcase'>
+    <div class="container text-center">
+      <div class="home-search p-5">
+        <div class="overlay p-5">
+          <h1 class="display-4 mb-4">
+            E-Petition - централизованная платформа для элетронных заявок
+          </h1>
+          <div class="search">
+            <form action="{% url 'search' %}">
+              <!-- Form Row 1 -->
+            <div class="form-row">
+              <div class="col-md-4 mb-3">
+                <input type="text" name="keywords" class="form-control" placeholder="Ключевое слово (дерево, парк, светофор)"
+                value={{ values.keywords }}>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="sr-only">Address</label>
+                <input type="text" name="address" class="form-control" placeholder="Адрес"
+                value={{ values.keywords }}>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="sr-only">Title</label>
+                <input type="text" name="title" class="form-control" placeholder="Название"
+                value={{ values.keywords }}>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                  <select name="status" class="form-control">
+                    <option selected="true" disabled="disabled">Фильровать по статусу</option>
+                    {% for key,value in status_filter_choice.items %}
+                      <option value="{{ key }}">{{ value }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              <div class="col-md-6 mb-3">
+                  <select name="created_date" class="form-control">
+                    <option selected="true" disabled="disabled">Фильровать по дате создания: </option>
+                    {% for key,value in created_date_filter_choice.items %}
+                      <option value="{{ key }}">{{ value }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <!-- Form Row 2 -->
+            <button class="btn btn-secondary btn-block mt-4" type="submit">Submit form</button>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <br>
+  <!-- Alerts -->
+  {% include 'partials/_alerts.html' %}
+
+  <!-- Listings -->
+  <section id="listings" class="py-5">
+    <div class="container">
+      <h3 class="text-center mb-3">Недавно созданные заявки</h3>
+      <div class="row">
+        {% if listings %}
+          {% for listing in listings %}
+            <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card listing-preview">
+            <img class="card-img-top" src="{{ listing.photo_description_1.url }}" style="height: 200px" alt="">
+            <div class="card-img-overlay">
+              <h2>
+                <span class="badge badge-secondary text-white">{{ listing.status }}</span>
+              </h2>
+            </div>
+            <div class="card-body">
+              <div class="listing-heading text-center">
+                <h4 class="text-primary">{{ listing.title }}</h4>
+                <p>
+                  <i class="fas fa-map-marker text-secondary"></i>{{ listing.address }}</p>
+              </div>
+              <p class="text-dark" style="overflow: hidden; height: 140px">
+                {{ listing.description }}
+              </p>
+              <hr>
+              <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">Подробнее</a>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+        {% else %}
+          <div class="col-md-12">
+            Нет заявок в данное время
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="py-5 bg-secondary text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fas fa-comment fa-4x mr-4"></i>
+          <hr>
+          <h3>Легко и Быстро</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident
+            iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-home fa-4x mr-4"></i>
+          <hr>
+          <h3>Фото отчет сделанных работ</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident
+            iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-suitcase fa-4x mr-4"></i>
+          <hr>
+          <h3>Анализ и оценка от граждан</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident
+            iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

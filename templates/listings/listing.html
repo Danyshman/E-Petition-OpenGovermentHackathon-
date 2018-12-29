@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{#{% block title %} | Welcome {% endblock %}#}
+{% block content %}
+  <section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4">{{ listing.title }}</h1>
+          <p class="lead">
+            <i class="fas fa-map-marker"></i> {{ listing.address }}2</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Alerts -->
+  {% include 'partials/_alerts.html' %}
+
+  <!-- Listing -->
+  <section id="listing" class="py-4">
+    <div class="container">
+      <div class="row">
+        <h1 style="font-size: 2rem">Фото описание заявки</h1>
+        <div class="col-md-12">
+          <div class="row">
+            <div class="column">
+              <img src="{{ listing.photo_description_1.url }}" alt="" style="width:100%; height: 350px">
+            </div>
+            <div class="column">
+              <img src="{{ listing.photo_description_2.url }}" alt="" style="width:100%;height: 350px">
+            </div>
+          </div>
+          <!-- Fields -->
+          <div class="row mb-5 fields">
+            <div class="col-md-6">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item text-secondary">
+                  Название:
+                  <span class="float-right">{{ listing.title }}</span>
+                </li>
+                <li class="list-group-item text-secondary">
+                  Дата создания:
+                  <span class="float-right">{{ listing.created_date | naturaltime }}</span>
+                </li>
+                <li class="list-group-item text-secondary">
+                  Статус:
+                  <span class="float-right">{{ listing.status }}</span>
+                </li>
+                <li class="list-group-item text-secondary">
+                  Адрес:
+                  <span class="float-right">{{ listing.address }}</span>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item text-secondary">
+                  Дата окончания:
+                  {% if listing.status == 'completed' %}
+                    <span class="float-right">{{ listing.closed_date }}</span>
+                  {% else %}
+                    <span class="float-right">Not closed yet</span>
+                  {% endif %}
+                </li>
+                <li class="list-group-item text-secondary">
+                  Количество комментариев:
+                  <span class="float-right">3200</span>
+                </li>
+                <li class="list-group-item text-secondary">
+                  Все оценки:
+                  <span class="float-right">{{ listing.num_of_rates }}</span>
+                </li>
+                <li class="list-group-item text-secondary">
+                  Средняя оценка:
+                  <span class="float-right">{{ listing.average_rate }}</span>
+                </li>
+
+
+              </ul>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="row mb-5">
+            <div class="col-md-12 bg-success text-dark p-3 rounded align-content-center">
+              <h1 style='text-align: center;font-size: 1.5rem'>Описание</h1>
+              {{ listing.description }}
+            </div>
+          </div>
+          <h1 style="font-size: 2rem">Фото отчет сделанной работы</h1>
+          <div class="rating-stars">
+            <a href=""><i class="fa fa-star star-rate"></i>1</a>
+            <a href=""><i class="fa fa-star star-rate"></i>2</a>
+            <a href=""><i class="fa fa-star star-rate"></i>3</a>
+            <a href=""><i class="fa fa-star star-rate"></i>4</a>
+            <a href=""><i class="fa fa-star star-rate"></i>5</a>
+          </div>
+          <div class="row">
+            {% if listing.status == 'completed' %}
+              <div class="column">
+              <img src="{{ listing.photo_result_1 }}" alt="" style="width:100%">
+            </div>
+            <div class="column">
+              <img src="{{ listing.photo_result_2 }}" alt="" style="width:100%">
+            </div>
+            {% else %}
+            {% endif %}
+            <div class="column">
+              <img src="{% static 'img/home-1.jpg' %}" alt="Snow" style="width:100%; height: 350px">
+            </div>
+            <div class="column">
+              <img src="{% static 'img/home-1.jpg' %}" alt="Forest" style="width:100%; height: 350px">
+            </div>
+          </div>
+        </div>
+
+        <!-- Comments -->
+
+        <div class="comment-container">
+          <ul class="comment-section">
+            {% if comments %}
+              {% for comment in comments %}
+              <li class="comment user-comment">
+              <div class="info">
+                <a href="#">{{ comment.user.username }}</a>
+                <span>{{ comment.created_date | naturaltime }}</span>
+              </div>
+              <a class="avatar" href="#">
+                <img src="images/avatar_user_1.jpg" width="35" alt="" title="Anie Silverston" />
+              </a>
+              <p>{{ comment.body }}</p>
+            </li>
+              {% endfor %}
+            {% else %}
+              <h3 style="text-align: center">
+                comment.user.username
+              </h3>
+            {% endif %}
+{#            <li class="comment author-comment">#}
+{#              <div class="info">#}
+{#                <a href="#">Jack Smith</a>#}
+{#                <span>3 hours ago</span>#}
+{#              </div>#}
+{#              <a class="avatar" href="#">#}
+{#                <img src="images/avatar_author.jpg" width="35" alt="" title="Jack Smith" />#}
+{#              </a>#}
+{#              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse gravida sem sit amet molestie#}
+{#                portitor.#}
+{#              </p>#}
+{#            </li>#}
+
+            <li class="write-new">
+              <form action="{% url 'comment' %}" method="POST">
+                {% csrf_token %}
+                {% if user.is_authenticated %}
+                  <input type="hidden" name="listing_id" value="{{ listing.id }}">
+                {% else %}
+{#                  {% url '' %}#}
+                {% endif %}
+                <textarea placeholder="Write your comment here" name="comment"></textarea>
+                <div>
+                  <button type="submit" value="Send" style="background: #10284e">Отправить</button>
+                </div>
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Inquiry Modal -->
+  <div class="modal fade" id="inquiryModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="property_name" class="col-form-label">Property:</label>
+              <input type="text" name="listing" class="form-control" value="45 Drivewood Cirlce" disabled>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-form-label">Name:</label>
+              <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-form-label">Email:</label>
+              <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="phone" class="col-form-label">Phone:</label>
+              <input type="text" name="phone" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="message" class="col-form-label">Message:</label>
+              <textarea name="message" class="form-control"></textarea>
+            </div>
+            <hr>
+            <input type="submit" value="Send" class="btn btn-block btn-secondary">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
