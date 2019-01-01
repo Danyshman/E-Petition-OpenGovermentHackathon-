@@ -1,9 +1,11 @@
 import collections
+from enum import Enum
+
 
 form_status = (
-    ('pending', 'Pending'),
-    ('in_process', 'In_Process'),
-    ('completed', 'Completed')
+    ('pending', 'В ожидании'),
+    ('in_process', 'В процессе'),
+    ('completed', 'Закрыто')
 )
 
 status_filter_choice = collections.OrderedDict()

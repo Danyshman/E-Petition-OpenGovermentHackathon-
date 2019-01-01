@@ -1,8 +1,10 @@
+from django.contrib import messages
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Listing
-from constants import status_filter_choice, users_form_filter_choice
+from constants import status_filter_choice, users_form_filter_choice, created_date_filter_choice
 from comments.models import Comment
+import math
 
 
 def index(request):
@@ -17,6 +19,8 @@ def index(request):
 
 
 def listing(request, listing_id):
+    if request.method == 'POST':
+        print('hello')
     listing = get_object_or_404(Listing, pk=listing_id)
     comments = Comment.objects.filter(listing=listing)
     context = {
@@ -24,6 +28,48 @@ def listing(request, listing_id):
         'comments': comments
     }
     return render(request, 'listings/listing.html', context)
+
+
+def rate(request, listing_id, rate):
+    if request.user.is_authenticated:
+        listing = get_object_or_404(Listing, pk=listing_id)
+        if request.user in listing.rated_forms_id.all():
+            messages.error(request, 'Вы уже оценили данную заявку')
+            return redirect('listing', listing_id)
+        else:
+            listing.total_rate += rate
+            listing.num_of_rates += 1
+            listing.average_rate = listing.total_rate / listing.num_of_rates
+            listing.rated_forms_id.add(request.user)
+            listing.save()
+            messages.success(request, 'Вы успешно оценили данную заявку')
+            return redirect('listing', listing_id)
+    else:
+        messages.error(request, 'Чтобы оценить заявку, вы должны быть залогинены')
+        return redirect('login')
+
+
+def create(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            title = request.POST['title']
+            address = request.POST['address']
+            description = request.POST['description']
+            user = request.user
+            form = Listing(
+                title=title,
+                address=address,
+                photo_description_1=request.FILES['photo_description_1'],
+                photo_description_2=request.FILES['photo_description_2'],
+                description=description,
+                user=user
+            )
+            form.save()
+            return redirect('index')
+    else:
+        messages.error(request, 'Чтобы создать заявку, вы должны быть залогинены')
+        return redirect('login')
+    return render(request, 'listings/create_form.html')
 
 
 def search(request):
@@ -48,10 +94,14 @@ def search(request):
         created_date = request.GET['created_date']
         if created_date:
             queryset_list = queryset_list.order_by('-created_date')
+    paginator = Paginator(queryset_list, 6)
+    page = request.GET.get('page')
+    paged_listings = paginator.get_page(page)
     context = {
-        'form_filter_choices': status_filter_choice,
-        'specific_filter_choice': users_form_filter_choice,
-        'listings': queryset_list,
+        'status_filter_choice': status_filter_choice,
+        'users_form_filter_choice': users_form_filter_choice,
+        'created_date_filter_choice': created_date_filter_choice,
+        'listings': paged_listings,
         'values': request.GET
     }
     return render(request, 'listings/search.html', context)

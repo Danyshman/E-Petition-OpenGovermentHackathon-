@@ -20,7 +20,7 @@
             <a class="nav-link" href="{% url 'index' %}">Главная страница</a>
           </li>
 	        <li
-             {% if 'listings' == request.path %}
+             {% if '/listings/' == request.path %}
                   class="nav-item active mr-3"
             {% else %}
                   class="nav-item mr-3"
@@ -28,8 +28,15 @@
           >
             <a class="nav-link" href="{% url 'listings' %}">Все заявки</a>
           </li>
-          <li class="nav-item mr-3">
-            <a class="nav-link" href="">Cоздать заявку</a>
+        <!-- Create form -->
+          <li
+            {% if 'create' in request.path %}
+                class="nav-item active mr-3"
+            {% else %}
+                class="nav-item mr-3"
+            {% endif %}
+          >
+            <a class="nav-link" href="{% url 'create' %}">Cоздать заявку</a>
           </li>
         </ul>
 

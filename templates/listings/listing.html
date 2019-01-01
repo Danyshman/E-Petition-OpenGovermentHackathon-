@@ -69,7 +69,7 @@
                   <span class="float-right">3200</span>
                 </li>
                 <li class="list-group-item text-secondary">
-                  Все оценки:
+                  Всего оценок:
                   <span class="float-right">{{ listing.num_of_rates }}</span>
                 </li>
                 <li class="list-group-item text-secondary">
@@ -90,12 +90,13 @@
             </div>
           </div>
           <h1 style="font-size: 2rem">Фото отчет сделанной работы</h1>
+          {% csrf_token %}
           <div class="rating-stars">
-            <a href=""><i class="fa fa-star star-rate"></i>1</a>
-            <a href=""><i class="fa fa-star star-rate"></i>2</a>
-            <a href=""><i class="fa fa-star star-rate"></i>3</a>
-            <a href=""><i class="fa fa-star star-rate"></i>4</a>
-            <a href=""><i class="fa fa-star star-rate"></i>5</a>
+            <a class="b1" href="{% url 'rate' listing.id  1 %}"><i class="fas fa-star"></i></a>
+            <a class="b2" href="{% url 'rate' listing.id  2 %}"><i class="fas fa-star"></i></a>
+            <a class="b3" href="{% url 'rate' listing.id  3 %}"><i class="fas fa-star"></i></a>
+            <a class="b4" href="{% url 'rate' listing.id  4 %}"><i class="fas fa-star"></i></a>
+            <a class="b5" href="{% url 'rate' listing.id  5 %}"><i class="fas fa-star"></i></a>
           </div>
           <div class="row">
             {% if listing.status == 'completed' %}
@@ -107,12 +108,21 @@
             </div>
             {% else %}
             {% endif %}
-            <div class="column">
-              <img src="{% static 'img/home-1.jpg' %}" alt="Snow" style="width:100%; height: 350px">
+            {% if listing.photo_result_1 and listing.photo_result_2%}
+              <div class="column">
+                <img src="{{ listing.photo_result_1 }}" alt="" style="width:100%; height: 350px">
+              </div>
+              <div class="column">
+                <img src="{{ listing.photo_result_2 }}" alt="" style="width:100%; height: 350px">
+              </div>
+            {% else %}
+              <div class="column">
+                <img src="{% static 'img/not-completed.jpg' %}" alt="" style="width:100%; height: 350px">
+              </div>
+              <div class="column">
+                <img src="{% static 'img/not-completed.jpg' %}" alt="" style="width:100%; height: 350px">
             </div>
-            <div class="column">
-              <img src="{% static 'img/home-1.jpg' %}" alt="Forest" style="width:100%; height: 350px">
-            </div>
+            {% endif %}
           </div>
         </div>
 
@@ -127,16 +137,12 @@
                 <a href="#">{{ comment.user.username }}</a>
                 <span>{{ comment.created_date | naturaltime }}</span>
               </div>
-              <a class="avatar" href="#">
-                <img src="images/avatar_user_1.jpg" width="35" alt="" title="Anie Silverston" />
-              </a>
+              <div style="margin: 10px;">
+              </div>
               <p>{{ comment.body }}</p>
             </li>
               {% endfor %}
             {% else %}
-              <h3 style="text-align: center">
-                comment.user.username
-              </h3>
             {% endif %}
 {#            <li class="comment author-comment">#}
 {#              <div class="info">#}
@@ -151,14 +157,10 @@
 {#              </p>#}
 {#            </li>#}
 
-            <li class="write-new">
+            <li class="write-new" style="margin: 0 150px">
               <form action="{% url 'comment' %}" method="POST">
                 {% csrf_token %}
-                {% if user.is_authenticated %}
-                  <input type="hidden" name="listing_id" value="{{ listing.id }}">
-                {% else %}
-{#                  {% url '' %}#}
-                {% endif %}
+                <input type="hidden" name="listing_id" value="{{ listing.id }}">
                 <textarea placeholder="Write your comment here" name="comment"></textarea>
                 <div>
                   <button type="submit" value="Send" style="background: #10284e">Отправить</button>
@@ -170,44 +172,4 @@
       </div>
     </div>
   </section>
-
-  <!-- Inquiry Modal -->
-  <div class="modal fade" id="inquiryModal" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="property_name" class="col-form-label">Property:</label>
-              <input type="text" name="listing" class="form-control" value="45 Drivewood Cirlce" disabled>
-            </div>
-            <div class="form-group">
-              <label for="name" class="col-form-label">Name:</label>
-              <input type="text" name="name" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="email" class="col-form-label">Email:</label>
-              <input type="email" name="email" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="phone" class="col-form-label">Phone:</label>
-              <input type="text" name="phone" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="message" class="col-form-label">Message:</label>
-              <textarea name="message" class="form-control"></textarea>
-            </div>
-            <hr>
-            <input type="submit" value="Send" class="btn btn-block btn-secondary">
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
 {% endblock %}

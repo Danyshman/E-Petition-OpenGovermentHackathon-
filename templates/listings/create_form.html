@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <div class="form-area" style="background: url('{% static 'img/bishkek2.jpg' %}') no-repeat center; background-size: cover">
+    <div class="box">
+      <h2>Создать заявку</h2>
+    <form enctype="multipart/form-data" action="{% url 'create' %}">
+      {% csrf_token %}
+      <div class="inputBox">
+        <input type="text" name="title" required="">
+        <label>Название</label>
+      </div>
+      <div class="inputBox">
+        <input type="text" name="address" required="">
+        <label>Адрес</label>
+      </div>
+      <div class="inputBox">
+        <input type="file" name="photo_description_1" required="">
+      </div>
+      <div class="inputBox">
+        <input type="file" name="photo_description_2" required="">
+      </div>
+      <div class="inputBox">
+        <textarea name="description" cols="50" rows="5"></textarea>
+        <label>Описание</label>
+      </div>
+      <input type="submit" value="Отправить" formmethod="post">
+    </form>
+    </div>
+  </div>
+{% endblock %}

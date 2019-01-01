@@ -1,16 +1,56 @@
-.star-rating {
+.rating-stars {
     line-height:32px;
     font-size:1.25em;
     cursor: pointer;
     color: #6f42c1;
     display: inline-block;
-    margin-right: 10px
+    direction: rtl;
 }
 
-.star-rating :active,
-.star-rating :hover{
-    color: orange;
+.star-rating a {
+    font-size: 3rem;
+    color: #313131;
+    transition: 0.3s all;
 }
+
+.star-rating:hover {
+    color: #f1c40f;
+
+}
+
+.b1:hover ~ a{
+    color: #f1c40f;
+}
+.b2:hover ~ a{
+    color: #f1c40f;
+}
+.b3:hover ~ a{
+    color: #f1c40f;
+}
+.b4:hover ~ a {
+    color: #f1c40f;
+}
+.b5:hover ~ a{
+    color: #f1c40f;
+}
+
+.b1:hover{
+    color: #f1c40f;
+}
+.b2:hover{
+    color: #f1c40f;
+}
+.b3:hover{
+    color: #f1c40f;
+}
+.b4:hover{
+    color: #f1c40f;
+}
+.b5:hover{
+    color: #f1c40f;
+}
+
+
 
 @media (max-width: 800px){
     .star-rating {

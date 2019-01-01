@@ -1,0 +1,108 @@
+.form-area {
+	margin: 0;
+	padding: 0;
+	width: 100vw;
+	height: 100vh;
+}
+
+.box {
+	position: relative;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 500px;
+	background: rgba(0,0,0,0.6);
+	padding: 40px;
+	box-sizing: border-box;
+	box-shadow: 0 15px 25px rgba(0,0,0,0.5);
+	border-radius: 10px;
+	height: auto;
+}
+
+.box h2 {
+	margin: 0 0 30px;
+	padding: 0;
+	color: #fff;
+	text-align: center;
+}
+
+.box .inputBox {
+	position: relative;
+	margin: -2.2px 0;
+}
+
+.box .inputBox input {
+	width: 100%;
+	padding: 5px 0;
+	font-size: 1rem;
+	color: #fff;
+	letter-spacing: 2px;
+	margin-bottom: 30px;
+	border: none;
+	border-bottom: 1px solid #fff;
+	outline: none;
+	background: transparent;
+}
+
+.box .inputBox textarea {
+	width: 100%;
+	padding: 10px 0;
+	font-size: 1rem;
+	color: #fff;
+	letter-spacing: 2px;
+	margin-bottom: 30px;
+	border: none;
+	border-bottom: 1px solid #fff;
+	outline: none;
+	background: transparent;
+}
+
+.box .inputBox label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 10px 0;
+	letter-spacing: 2px;
+	font-size: 1rem;
+	color: #fff;
+	pointer-events: none;
+	transition: .5s;
+}
+.box .inputBox input:focus ~ label,
+.box .inputBox textarea:focus ~ label,
+/*.box .inputBox textarea:valid ~ label,*/
+.box .inputBox input:valid ~ label {
+	top: -30px;
+	left: 0;
+	color: #03a9f4;
+	font-size: 1rem;
+
+}
+
+
+.box .inputBox textarea {
+	letter-spacing: 2px;
+	font-size: 1rem;
+	color: #fff;
+}
+
+
+.box input[type=submit] {
+	border: none;
+	outline: none;
+	color: #fff;
+	background: #10284e;
+	padding: 10px 20px;
+	border-radius: 10px;
+	cursor: pointer;
+
+}
+
+.box input[type=file] {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: white;
+
+}
+
+
