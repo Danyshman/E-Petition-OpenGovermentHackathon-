@@ -18,6 +18,21 @@ def index(request):
     return render(request, 'listings/listings.html', context)
 
 
+def users_listings(request):
+    if request.user.is_authenticated:
+        listings = Listing.objects.filter(user=request.user)
+        paginator = Paginator(listings, 6)
+        page = request.GET.get('page')
+        paged_listings = paginator.get_page(page)
+        context = {
+            'listings': paged_listings
+        }
+        return render(request, 'listings/listings.html', context)
+    else:
+        messages.error(request, 'Чтобы посмотреть свои заявку, вы должны быть залогинены')
+        return redirect('login')
+
+
 def listing(request, listing_id):
     if request.method == 'POST':
         print('hello')

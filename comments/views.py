@@ -15,7 +15,10 @@ def comment(request):
                 listing=listing,
                 body=comment_body,
             )
+            listing.num_of_comments += 1
+            listing.save()
             comment.save()
+            messages.success(request, 'Вы успешно прокоментировали данную заявку')
             return redirect('/listings/' + listing_id)
     else:
         messages.error(request, 'Чтобы прокоментировать заявку, вы должны быть залогинены')

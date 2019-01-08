@@ -72,7 +72,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'e_petitiondb',
         'USER': 'postgres',
-        'PASSWORD': "12345",
+        'PASSWORD': "Google1974",
         'HOST': 'localhost',
     }
 }

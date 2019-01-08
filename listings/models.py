@@ -20,6 +20,7 @@ class Listing(models.Model):
     created_date = models.DateTimeField(default=timezone.now, blank=True)
     closed_date = models.DateTimeField(default=timezone.now, blank=True)
     rated_forms_id = models.ManyToManyField(User, blank=True, related_name='rated_forms_id')
+    num_of_comments = models.DecimalField(decimal_places=0, max_digits=10, default=0, blank=True)
 
     def __str__(self):
         return self.title
