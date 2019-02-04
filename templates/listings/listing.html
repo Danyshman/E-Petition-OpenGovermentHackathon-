@@ -50,7 +50,13 @@
                 </li>
                 <li class="list-group-item text-secondary">
                   Статус:
-                  <span class="float-right">{{ listing.status }}</span>
+                    {% if listing.status == 'in_process' %}
+                        <span class="float-right">{{ "В процессе" }}</span>
+                    {% elif listing.status == 'completed' %}
+                        <span class="float-right">{{ "Завершенно" }}</span>
+                    {% elif listing.status == 'pending' %}
+                        <span class="float-right">{{ 'В ожидании' }}</span>
+                    {% endif %}
                 </li>
                 <li class="list-group-item text-secondary">
                   Адрес:
@@ -96,11 +102,11 @@
           <h1 style="font-size: 2rem">Фото отчет сделанной работы</h1>
           {% csrf_token %}
           <div class="rating-stars">
-            <a class="b1" href="{% url 'rate' listing.id  1 %}"><i class="fas fa-star"></i></a>
-            <a class="b2" href="{% url 'rate' listing.id  2 %}"><i class="fas fa-star"></i></a>
+            <a class="b1" href="{% url 'rate' listing.id  5 %}"><i class="fas fa-star"></i></a>
+            <a class="b2" href="{% url 'rate' listing.id  4 %}"><i class="fas fa-star"></i></a>
             <a class="b3" href="{% url 'rate' listing.id  3 %}"><i class="fas fa-star"></i></a>
-            <a class="b4" href="{% url 'rate' listing.id  4 %}"><i class="fas fa-star"></i></a>
-            <a class="b5" href="{% url 'rate' listing.id  5 %}"><i class="fas fa-star"></i></a>
+            <a class="b4" href="{% url 'rate' listing.id  2 %}"><i class="fas fa-star"></i></a>
+            <a class="b5" href="{% url 'rate' listing.id  1 %}"><i class="fas fa-star"></i></a>
           </div>
           <div class="row">
             {% if listing.status == 'completed' %}

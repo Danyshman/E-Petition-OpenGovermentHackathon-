@@ -1,5 +1,4 @@
 import collections
-from enum import Enum
 
 
 form_status = (
