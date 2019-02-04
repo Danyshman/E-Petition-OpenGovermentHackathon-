@@ -68,11 +68,13 @@ def create(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             title = request.POST['title']
+            category = request.POST['category']
             address = request.POST['address']
             description = request.POST['description']
             user = request.user
             form = Listing(
                 title=title,
+                category=category,
                 address=address,
                 photo_description_1=request.FILES['photo_description_1'],
                 photo_description_2=request.FILES['photo_description_2'],

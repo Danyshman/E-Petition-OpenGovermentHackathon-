@@ -7,21 +7,30 @@
     <form enctype="multipart/form-data" action="{% url 'create' %}">
       {% csrf_token %}
       <div class="inputBox">
-        <input type="text" name="title" required="">
+        <input type="text" name="title" required>
         <label>Название</label>
       </div>
+      <select style="margin-bottom: 30px;" class="form-control" name="category" required>
+        <option disabled selected>Категория</option>
+        <option>Дороги</option>
+        <option>Общественный транспорт</option>
+        <option>Электроснабжение</option>
+        <option>Теплоснабжение</option>
+        <option>Водоснабжение</option>
+        <option>Мусор</option>
+      </select>
       <div class="inputBox">
-        <input type="text" name="address" required="">
+        <input type="text" name="address" required>
         <label>Адрес</label>
       </div>
       <div class="inputBox">
-        <input type="file" name="photo_description_1" required="">
+        <input type="file" name="photo_description_1" required>
       </div>
       <div class="inputBox">
-        <input type="file" name="photo_description_2" required="">
+        <input type="file" name="photo_description_2" required>
       </div>
       <div class="inputBox">
-        <textarea name="description" cols="50" rows="5"></textarea>
+        <textarea type="text" name="description" cols="50" rows="5"></textarea>
         <label>Описание</label>
       </div>
       <input type="submit" value="Отправить" formmethod="post">
