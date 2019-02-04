@@ -161,7 +161,7 @@
               <form action="{% url 'comment' %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="listing_id" value="{{ listing.id }}">
-                <textarea placeholder="Write your comment here" name="comment"></textarea>
+                <textarea placeholder="Комментарий" name="comment"></textarea>
                 <div>
                   <button type="submit" value="Send" style="background: #10284e">Отправить</button>
                 </div>
