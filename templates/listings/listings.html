@@ -28,14 +28,24 @@
           <div class="card listing-preview">
             <img class="card-img-top" src="{{ listing.photo_description_1.url }}"  alt="" style="width:100%; height: 200px">
             <div class="card-img-overlay">
-              <h2>
-                <span class="badge badge-secondary text-white">{{ listing.status }}</span>
-              </h2>
+                {% if listing.status == 'in_process' %}
+                    <h2>
+                        <span class="badge badge-secondary text-white">{{ "В процессе" }}</span>
+                    </h2>
+                {% elif listing.status == 'completed' %}
+                    <h2>
+                        <span class="badge badge-secondary text-white">{{ "Завершенно" }}</span>
+                    </h2>
+                {% elif listing.status == 'pending' %}
+                    <h2>
+                        <span class="badge badge-secondary text-white">{{ "В ожидании" }}</span>
+                    </h2>
+                {% endif %}
             </div>
             <div class="card-body">
               <div class="listing-heading text-center">
-                <h4 class="text-primary">{{ listing.title }}</h4>
-                <p>
+                <h4 class="text-primary" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">{{ listing.title }}</h4>
+                <p style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">
                   <i class="fas fa-map-marker text-secondary"></i> {{ listing.address }}</p>
               </div>
               <p class="text-dark" style="overflow: hidden; height: 140px">

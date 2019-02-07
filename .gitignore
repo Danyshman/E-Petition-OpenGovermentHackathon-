@@ -10,7 +10,7 @@ local_settings.py
 db.sqlite3
 /media
 
-
+email_info.py
 /e_petition/settings/local
 .env
 .venv

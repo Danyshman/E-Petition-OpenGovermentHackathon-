@@ -5,7 +5,7 @@ from .models import Listing
 class ListingAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'title', 'address', 'status')
     list_display_links = ('id', 'user', 'title', 'address', 'status',)
-    search_fields = ('id', 'title', 'address', 'status')
+    search_fields = ('id', 'title', 'address', 'status', 'category')
     list_per_page = 10
 
 
