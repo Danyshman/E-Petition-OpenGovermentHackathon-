@@ -26,7 +26,7 @@ pip install -r requirements.txt
 ```bash
 python manage.py migrate
 ```
-
+~~
 ### Start server
 
 * enter virtual environment
@@ -38,4 +38,5 @@ source venv/bin/activate
 * start django server
 
 ```bash
-python manage.py runserver``
+python manage.py runserver
+```

@@ -1,9 +1,5 @@
-from django.shortcuts import render, redirect
 from django.contrib import messages, auth
-from django.contrib.auth.models import User
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -24,11 +20,11 @@ def register(request):
 
         if password == password2:
             if User.objects.filter(username=user_name).exists():
-                messages.error(request, 'Such user_name is taken')
+                messages.error(request, 'Этот логин уже занят')
                 return redirect('register')
             else:
                 if User.objects.filter(email=email).exists():
-                    messages.error(request, 'Such email is already being used')
+                    messages.error(request, 'Эта эл. почта уже занята')
                     return redirect('register')
                 else:
                     user = User.objects.create_user(
@@ -41,7 +37,7 @@ def register(request):
                     user.is_active = False
                     user.save()
                     current_site = get_current_site(request)
-                    mail_subject = 'Activate your E-Petition account.'
+                    mail_subject = 'Активация аккаунта для использования платформы E-Petition.'
                     message = render_to_string('accounts/acc_activate_email.html', {
                         'user': user,
                         'domain': current_site.domain,
@@ -53,10 +49,10 @@ def register(request):
                         mail_subject, message, to=[to_email]
                     )
                     email.send()
-                    messages.success(request, 'We sent you email, please confirm your mail to activate account')
+                    messages.success(request, 'Мы отправили письмо на вашу почту для активация вашего аккаунта')
                     return redirect('login')
         else:
-            messages.error(request, 'Passwords do not match')
+            messages.error(request, 'Пароли не совпадают!')
             return redirect('register')
     else:
         return render(request, 'accounts/register.html')
@@ -72,10 +68,10 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         auth.login(request, user)
-        messages.success(request, 'You are successfuly activated your account!')
+        messages.success(request, 'Вы успешно активировали свой аккаут!')
         return redirect('index')
     else:
-        messages.error(request, 'Activation link in invalid!')
+        messages.error(request, 'Ссылка для активации не валидна!')
         return redirect('login')
 
 
@@ -88,10 +84,10 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            messages.success(request, 'You are now logged in')
+            messages.success(request, 'Вы вошли в систему')
             return redirect('index')
         else:
-            messages.error(request, 'Invalid credentials')
+            messages.error(request, 'Неверный логин/пароль!', )
             return redirect('login')
     else:
         return render(request, 'accounts/login.html')
@@ -100,7 +96,7 @@ def login(request):
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
-        messages.success(request, 'You now logout')
+        messages.success(request, 'Вы покинули систему')
         return redirect('index')
 
 
