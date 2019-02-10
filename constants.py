@@ -41,3 +41,14 @@ created_date_filter_choice = collections.OrderedDict()
 created_date_filter_choice['created_date'] = 'Дата создания'
 
 
+government_branch_emails = {
+    'road': 'road_ministry@gmail.com',
+    'street_lights': 'street_lights_ministry@gmail.com',
+    'gardening': 'gardening_ministry@gmail.com',
+    'electricity': 'electricity_ministry@gmail.com',
+    'water': 'water_ministry@gmail.com',
+    'rubbish': 'rubbish_ministry@gmail.com',
+    'heat': 'heat_ministry@gmail.com',
+    'other': 'other_ministry@gmail.com'
+}
+

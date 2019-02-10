@@ -8,7 +8,8 @@ env=environ.Env(
     DB_NAME=(str, ''),
     DB_USER=(str, ''),
     DB_PASSWORD=(str, ''),
-    ALLOWED_HOSTS=(list, [])
+    ALLOWED_HOSTS=(list, ['127.0.0.1']),
+    APP_URL=(str, 'http://localhost:8000')
 )
 
 environ.Env.read_env()
@@ -27,6 +28,8 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+
+APP_URL = env('APP_URL')
 
 
 # Application definition
@@ -143,12 +146,8 @@ MESSAGE_TAGS = {
 }
 
 # EMAIL CONFIG
-
-from .email_info import *
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = EMAIL_USE_TLS
-EMAIL_HOST = EMAIL_HOST
-EMAIL_HOST_USER = EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
-EMAIL_PORT = EMAIL_PORT
+try:
+    from .email_info import *
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+except ImportError:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

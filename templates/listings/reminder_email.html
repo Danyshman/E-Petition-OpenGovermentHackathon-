@@ -1,5 +1,5 @@
 {% autoescape off %}
-Здравствуйте {{ user.username }},
-Пожалуйста пройдите по ссылке чтобы активировать ваш аккаунт на платформе E-Petition,
-http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+На платформе E-Petition была создана заявка, которая не была рассмотрена в течении двух недель.
+Пожалуйста пройдите по ссылке чтобы изменить статус заявки,
+{{ APP_URL }}{{ '/listings/' }}{{ listing.id }}
 {% endautoescape %}
