@@ -42,7 +42,23 @@
                 </li>
                 <li class="list-group-item text-secondary">
                   Категория:
-                  <span class="float-right">{{ listing.category }}</span>
+                    {% if listing.category == 'road' %}
+                        <span class="float-right">{{ 'Жолдор/Дороги' }}</span>
+                    {% elif listing.category == 'street_lights' %}
+                        <span class="float-right">{{ 'Уличное освещение' }}</span>
+                    {% elif listing.category == 'electricity' %}
+                        <span class="float-right">{{ 'Элект камсыздоо/Электроснабжение' }}</span>
+                    {% elif listing.category == 'water' %}
+                        <span class="float-right">{{ 'Водоснабжение' }}</span>
+                    {% elif listing.category == 'rubbish' %}
+                        <span class="float-right">{{ 'Таштанды/Мусор' }}</span>
+                    {% elif listing.category == 'heat' %}
+                        <span class="float-right">{{ 'Жылуулук/Теплоснабжение' }}</span>
+                    {% elif listing.category == 'other' %}
+                        <span class="float-right">{{ 'Башка/Другое' }}</span>
+                    {% else %}
+                        <span class="float-right">{{ listing.category }}</span>
+                    {% endif %}
                 </li>
                 <li class="list-group-item text-secondary">
                   Дата создания:
@@ -71,7 +87,7 @@
                   {% if listing.status == 'completed' %}
                     <span class="float-right">{{ listing.closed_date }}</span>
                   {% else %}
-                    <span class="float-right">Not closed yet</span>
+                    <span class="float-right">Не завершено</span>
                   {% endif %}
                 </li>
                 <li class="list-group-item text-secondary">

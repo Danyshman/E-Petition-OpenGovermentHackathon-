@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from constants import form_status
+from constants import form_status, form_category
 from django.utils import timezone
 
 
@@ -9,7 +9,7 @@ class Listing(models.Model):
     title = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
     description = models.TextField()
-    category = models.CharField(max_length=100)
+    category = models.CharField(choices=form_category, max_length=100)
     average_rate = models.DecimalField(default=0, blank=True, decimal_places=1, max_digits=10)
     num_of_rates = models.DecimalField(decimal_places=0, max_digits=10, default=0, blank=True)
     total_rate = models.DecimalField(decimal_places=1, max_digits=10, default=0, blank=True)

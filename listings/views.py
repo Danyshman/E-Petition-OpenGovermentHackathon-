@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Listing
-from constants import status_filter_choice, users_form_filter_choice, created_date_filter_choice
+from constants import status_filter_choice, users_form_filter_choice, created_date_filter_choice, form_category
 from comments.models import Comment
 import math
 
