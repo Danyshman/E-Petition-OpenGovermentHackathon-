@@ -1,4 +1,4 @@
-# e_petition
+# E_petition
 Winner of Open Government Hakathon
 
 ### Set up
